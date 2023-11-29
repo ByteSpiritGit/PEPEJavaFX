@@ -58,7 +58,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.example.pepejavafx/com.example.pepejavafx.HelloApplication</mainClass>
+              <mainClass>com.example.pepejavafx/com.example.pepejavafx.main</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
