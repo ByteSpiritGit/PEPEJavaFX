@@ -15,82 +15,82 @@
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pepejavafx.ImageController">
-  <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…"  onAction="#browseImage"/>
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-            <Menu mnemonicParsing="false" text="Filter" />
-        <Menu mnemonicParsing="false" text="About">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About us" />
-                  <MenuItem mnemonicParsing="false" text="About application" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-      </menus>
-         <padding>
-            <Insets bottom="2.0" top="2.0" />
-         </padding>
-         <opaqueInsets>
-            <Insets bottom="2.0" top="2.0" />
-         </opaqueInsets>
-    </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="408.0" minWidth="720.0" prefHeight="615.0" prefWidth="1050.0" VBox.vgrow="ALWAYS">
-      <children>
-        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
-          <font>
-            <Font size="18.0" />
-          </font>
-        </Label>
-            <SplitPane dividerPositions="0.7" prefHeight="575.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="298.0">
-                     <children>
-                        <ImageView fx:id="imageView" fitHeight="560.0" fitWidth="615.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="252.0">
-                     <children>
-                        <Button layoutX="77.0" layoutY="14.0" mnemonicParsing="false" onAction="#browseImage" prefHeight="30.0" prefWidth="119.0" text="Select image file" AnchorPane.topAnchor="14.0" />
-                        <Button layoutX="98.0" layoutY="57.0" mnemonicParsing="false" text="Edit matrix" AnchorPane.topAnchor="57.0" />
-                        <RadioButton layoutX="78.0" layoutY="494.0" mnemonicParsing="false" text="Original image" AnchorPane.bottomAnchor="62.0" />
-                        <RadioButton layoutX="78.0" layoutY="525.0" mnemonicParsing="false" text="Modified image" AnchorPane.bottomAnchor="31.0" />
-                        <Button layoutX="66.0" layoutY="441.0" mnemonicParsing="false" text="Restore original image" AnchorPane.bottomAnchor="101.0" />
-                        <Button layoutX="83.0" layoutY="397.0" mnemonicParsing="false" text="Generate image" AnchorPane.bottomAnchor="145.0" />
-                        <Button layoutX="84.0" layoutY="193.0" mnemonicParsing="false" text="Apply matrix filter" AnchorPane.topAnchor="193.0" />
-                     </children>
-                  </AnchorPane>
-              </items>
-            </SplitPane>
-      </children>
-    </AnchorPane>
-  </children>
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" onAction="#browseImage" text="Open…" />
+                        <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Open Recent" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Save As…" />
+                        <MenuItem mnemonicParsing="false" text="Revert" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Preferences…" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Quit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Filter" />
+                <Menu mnemonicParsing="false" text="About">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About us" />
+                        <MenuItem mnemonicParsing="false" text="About application" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Undo" />
+                        <MenuItem mnemonicParsing="false" text="Redo" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Cut" />
+                        <MenuItem mnemonicParsing="false" text="Copy" />
+                        <MenuItem mnemonicParsing="false" text="Paste" />
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Select All" />
+                        <MenuItem mnemonicParsing="false" text="Unselect All" />
+                    </items>
+                </Menu>
+            </menus>
+            <padding>
+                <Insets bottom="2.0" top="2.0" />
+            </padding>
+            <opaqueInsets>
+                <Insets bottom="2.0" top="2.0" />
+            </opaqueInsets>
+        </MenuBar>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="408.0" minWidth="720.0" prefHeight="615.0" prefWidth="1050.0" VBox.vgrow="ALWAYS">
+            <children>
+                <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <SplitPane dividerPositions="0.7" prefHeight="575.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="298.0">
+                            <children>
+                                <ImageView fx:id="imageView" fitHeight="560.0" fitWidth="615.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="252.0">
+                            <children>
+                                <Button layoutX="77.0" layoutY="14.0" mnemonicParsing="false" onAction="#browseImage" prefHeight="30.0" prefWidth="119.0" text="Select image file" AnchorPane.topAnchor="14.0" />
+                                <Button layoutX="98.0" layoutY="57.0" mnemonicParsing="false" text="Edit matrix" AnchorPane.topAnchor="57.0" />
+                                <RadioButton layoutX="78.0" layoutY="494.0" mnemonicParsing="false" text="Original image" AnchorPane.bottomAnchor="62.0" />
+                                <RadioButton layoutX="78.0" layoutY="525.0" mnemonicParsing="false" text="Modified image" AnchorPane.bottomAnchor="31.0" />
+                                <Button layoutX="66.0" layoutY="441.0" mnemonicParsing="false" text="Restore original image" AnchorPane.bottomAnchor="101.0" />
+                                <Button layoutX="83.0" layoutY="397.0" mnemonicParsing="false" text="Generate image" AnchorPane.bottomAnchor="145.0" />
+                                <Button layoutX="84.0" layoutY="193.0" mnemonicParsing="false" text="Apply matrix filter" AnchorPane.topAnchor="193.0" />
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </children>
+        </AnchorPane>
+    </children>
 </VBox>
