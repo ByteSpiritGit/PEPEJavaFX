@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pepejavafx.ImageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pepejavafx.ImageController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="New" />
                         <MenuItem mnemonicParsing="false" onAction="#browseImage" text="Open…" />
                         <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Open Recent" />
                         <SeparatorMenuItem mnemonicParsing="false" />
@@ -32,6 +23,7 @@
                         <MenuItem mnemonicParsing="false" text="Preferences…" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Quit" />
+                        <MenuItem mnemonicParsing="false" text="New" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Filter" />
@@ -84,7 +76,7 @@
                                 <RadioButton layoutX="78.0" layoutY="494.0" mnemonicParsing="false" text="Original image" AnchorPane.bottomAnchor="62.0" />
                                 <RadioButton layoutX="78.0" layoutY="525.0" mnemonicParsing="false" text="Modified image" AnchorPane.bottomAnchor="31.0" />
                                 <Button layoutX="66.0" layoutY="441.0" mnemonicParsing="false" text="Restore original image" AnchorPane.bottomAnchor="101.0" />
-                                <Button layoutX="83.0" layoutY="397.0" mnemonicParsing="false" text="Generate image" AnchorPane.bottomAnchor="145.0" />
+                                <Button layoutX="83.0" layoutY="397.0" mnemonicParsing="false" text="Generate image" AnchorPane.bottomAnchor="145.0" onAction="#generateImage" />
                                 <Button layoutX="84.0" layoutY="193.0" mnemonicParsing="false" text="Apply matrix filter" AnchorPane.topAnchor="193.0" />
                             </children>
                         </AnchorPane>
