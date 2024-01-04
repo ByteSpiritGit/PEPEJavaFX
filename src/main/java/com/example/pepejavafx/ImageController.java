@@ -6,8 +6,11 @@ import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -17,6 +20,9 @@ public class ImageController {
     private History history = new History();
     private String imagePath;
 
+    @FXML private SplitPane mainSplitPane;
+    @FXML private AnchorPane rightMainAnchorPane;
+
     @FXML
     private ImageView imageView;
 
@@ -25,6 +31,8 @@ public class ImageController {
 
     @FXML
     private void initialize() {
+        mainSplitPane.setDividerPositions(0.7);
+        rightMainAnchorPane.setMinWidth(275);
     }
 
     @FXML
