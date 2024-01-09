@@ -1,5 +1,6 @@
 package com.example.pepejavafx;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
@@ -12,8 +13,16 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+
 import static com.example.pepejavafx.ImageUtils.LoadImage;
 import static com.example.pepejavafx.ImageUtils.makeColoredImage;
+
+import java.io.IOException;
+import javafx.stage.Stage;
+import javafx.scene.Node;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 
 public class ImageController {
 
@@ -33,6 +42,9 @@ public class ImageController {
     }
 
     @FXML
+    public void exitMenuClick(ActionEvent event) { Platform.exit(); }
+
+    @FXML
     private void browseImage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
@@ -40,13 +52,30 @@ public class ImageController {
         );
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
+
             String imagePath = selectedFile.getAbsolutePath();
             myImage = new MyImage(LoadImage(imagePath), null, imagePath);
-            history.save(imagePath);
-            displayImage(myImage.getOriginalImage());
+
+            imagePath = selectedFile.getAbsolutePath();
+            displayImage(imagePath);
         }
     }
 
+    @FXML
+    private void saveImage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.bmp", "*.jpeg")
+        );
+        File selectedFile = fileChooser.showSaveDialog(null);
+        if (selectedFile != null) {
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(imageView.getImage(), null), "png", selectedFile);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 
     @FXML
     private void displayRecent(ActionEvent event) {
