@@ -1,5 +1,7 @@
 package com.example.pepejavafx;
 
+import com.example.pepejavafx.filters.GrayScale;
+import com.example.pepejavafx.filters.Negative;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -90,20 +92,8 @@ public class ImageController {
     @FXML
     private void applyNegative() {
         try {
-            BufferedImage originalImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
-            BufferedImage filteredImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), originalImage.getType());
-            for (int x = 0; x < originalImage.getWidth(); x++) {
-                for (int y = 0; y < originalImage.getHeight(); y++) {
-                    int rgbOrig = originalImage.getRGB(x, y);
-                    Color c = new Color(rgbOrig);
-                    int r = 255 - c.getRed();
-                    int g = 255 - c.getGreen();
-                    int b = 255 - c.getBlue();
-                    Color nc = new Color(r, g, b);
-                    filteredImage.setRGB(x, y, nc.getRGB());
-                }
-            }
-            myImage.modifiedImage = filteredImage;
+            Negative negative = new Negative();
+            myImage.modifiedImage = negative.applyFilter(myImage.getOriginalImage());
             imageView.setImage(SwingFXUtils.toFXImage(myImage.modifiedImage, null));
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -113,21 +103,9 @@ public class ImageController {
     @FXML
     private void applyGrayscale() {
         try {
-            BufferedImage originalImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
-            BufferedImage filteredImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), originalImage.getType());
-            for (int x = 0; x < originalImage.getWidth(); x++) {
-                for (int y = 0; y < originalImage.getHeight(); y++) {
-                    int rgbOrig = originalImage.getRGB(x, y);
-                    Color c = new Color(rgbOrig);
-                    int r = c.getRed();
-                    int g = c.getGreen();
-                    int b = c.getBlue();
-                    int avg = (r + g + b) / 3;
-                    Color nc = new Color(avg, avg, avg);
-                    filteredImage.setRGB(x, y, nc.getRGB());
-                }
-            }
-            imageView.setImage(SwingFXUtils.toFXImage(filteredImage, null));
+            GrayScale grayScale = new GrayScale();
+            myImage.modifiedImage = grayScale.applyFilter(myImage.getOriginalImage());
+            imageView.setImage(SwingFXUtils.toFXImage(myImage.modifiedImage, null));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
