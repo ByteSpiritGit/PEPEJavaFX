@@ -1,5 +1,9 @@
 package com.example.pepejavafx;
 
+import com.example.pepejavafx.filters.GrayScale;
+import com.example.pepejavafx.filters.IFilter;
+import com.example.pepejavafx.filters.Negative;
+import com.example.pepejavafx.filters.Thresholding;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -18,14 +22,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import static com.example.pepejavafx.ImageUtils.LoadImage;
 import static com.example.pepejavafx.ImageUtils.makeColoredImage;
-
 
 public class ImageController {
 
@@ -65,7 +67,7 @@ public class ImageController {
 
             String imagePath = selectedFile.getAbsolutePath();
             myImage = new MyImage(LoadImage(imagePath), null, imagePath);
-
+            history.save(imagePath);
             imagePath = selectedFile.getAbsolutePath();
             displayImage(imagePath);
         }
@@ -102,59 +104,32 @@ public class ImageController {
         myImage = new MyImage(image, null, null);
     }
 
-    @FXML
-    private void applyNegative() {
+    private void applyFilter(IFilter filter) {
         try {
-            BufferedImage originalImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
-            BufferedImage filteredImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), originalImage.getType());
-            for (int x = 0; x < originalImage.getWidth(); x++) {
-                for (int y = 0; y < originalImage.getHeight(); y++) {
-                    int rgbOrig = originalImage.getRGB(x, y);
-                    Color c = new Color(rgbOrig);
-                    int r = 255 - c.getRed();
-                    int g = 255 - c.getGreen();
-                    int b = 255 - c.getBlue();
-                    Color nc = new Color(r, g, b);
-                    filteredImage.setRGB(x, y, nc.getRGB());
-                }
-            }
-            myImage.modifiedImage = filteredImage;
-            imageView.setImage(SwingFXUtils.toFXImage(myImage.modifiedImage, null));
+            myImage.modifiedImage = filter.applyFilter(myImage.getOriginalImage());
+            displayImage(myImage.modifiedImage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @FXML
+    private void applyNegative() {
+        applyFilter(new Negative());
     }
 
     @FXML
     private void applyGrayscale() {
-        try {
-            BufferedImage originalImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
-            BufferedImage filteredImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), originalImage.getType());
-            for (int x = 0; x < originalImage.getWidth(); x++) {
-                for (int y = 0; y < originalImage.getHeight(); y++) {
-                    int rgbOrig = originalImage.getRGB(x, y);
-                    Color c = new Color(rgbOrig);
-                    int r = c.getRed();
-                    int g = c.getGreen();
-                    int b = c.getBlue();
-                    int avg = (r + g + b) / 3;
-                    Color nc = new Color(avg, avg, avg);
-                    filteredImage.setRGB(x, y, nc.getRGB());
-                }
-            }
-            imageView.setImage(SwingFXUtils.toFXImage(filteredImage, null));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        applyFilter(new GrayScale());
+    }
+
+    @FXML
+    private void applyThresholding() {
+        applyFilter(new Thresholding());
     }
 
     private void displayImage(BufferedImage image) {
-        if (image != null) {
-            imageView.setImage(SwingFXUtils.toFXImage(image, null));
-            imageView.setPreserveRatio(true);
-            openRecentMenu.getItems().clear();
-            createRecentMenu();
-        }
+        applyFilter(new Negative());
     }
 
     private void displayImage(String url) {
@@ -168,7 +143,7 @@ public class ImageController {
         }
     }
 
-    private void createRecentMenu() {
+        private void createRecentMenu() {
         String[] historyArray = history.getHistory();
         for (int i = 0; i < historyArray.length; i++) {
             if (historyArray[i] != null) {

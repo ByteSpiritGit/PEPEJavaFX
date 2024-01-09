@@ -7,4 +7,6 @@ module com.example.pepejavafx {
 
     opens com.example.pepejavafx to javafx.fxml;
     exports com.example.pepejavafx;
+    exports com.example.pepejavafx.filters;
+    opens com.example.pepejavafx.filters to javafx.fxml;
 }

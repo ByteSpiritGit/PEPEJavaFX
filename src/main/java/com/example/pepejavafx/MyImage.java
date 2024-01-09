@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class MyImage {
 
-    private BufferedImage originalImage;
+    private final BufferedImage originalImage;
     public BufferedImage modifiedImage;
 
     public String imagePath;
