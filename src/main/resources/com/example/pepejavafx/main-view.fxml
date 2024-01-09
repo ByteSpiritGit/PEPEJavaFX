@@ -18,7 +18,7 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Close" />
                         <MenuItem mnemonicParsing="false" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Save As…" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveImage" text="Save As…" />
                         <MenuItem mnemonicParsing="false" text="Revert" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Preferences…" />
@@ -50,6 +50,10 @@
                         <MenuItem mnemonicParsing="false" text="Unselect All" />
                     </items>
                 </Menu>
+            <Menu mnemonicParsing="false" onAction="#exitMenuClick" text="Exit">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#exitMenuClick" text="Exit App" />
+               </items></Menu>
             </menus>
             <padding>
                 <Insets bottom="2.0" top="2.0" />
