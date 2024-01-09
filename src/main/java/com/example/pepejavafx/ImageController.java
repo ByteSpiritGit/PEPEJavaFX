@@ -1,6 +1,7 @@
 package com.example.pepejavafx;
 
 import com.example.pepejavafx.filters.GrayScale;
+import com.example.pepejavafx.filters.IFilter;
 import com.example.pepejavafx.filters.Negative;
 import com.example.pepejavafx.filters.Thresholding;
 import javafx.application.Platform;
@@ -13,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -89,46 +89,32 @@ public class ImageController {
         myImage = new MyImage(image, null, null);
     }
 
-    @FXML
-    private void applyNegative() {
+    private void applyFilter(IFilter filter) {
         try {
-            Negative negative = new Negative();
-            myImage.modifiedImage = negative.applyFilter(myImage.getOriginalImage());
+            myImage.modifiedImage = filter.applyFilter(myImage.getOriginalImage());
             displayImage(myImage.modifiedImage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @FXML
+    private void applyNegative() {
+        applyFilter(new Negative());
     }
 
     @FXML
     private void applyGrayscale() {
-        try {
-            GrayScale grayScale = new GrayScale();
-            myImage.modifiedImage = grayScale.applyFilter(myImage.getOriginalImage());
-            displayImage(myImage.modifiedImage);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        applyFilter(new GrayScale());
     }
 
     @FXML
     private void applyThresholding() {
-        try {
-            Thresholding thresholding = new Thresholding();
-            myImage.modifiedImage = thresholding.applyFilter(myImage.getOriginalImage());
-            displayImage(myImage.modifiedImage);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        applyFilter(new Thresholding());
     }
 
     private void displayImage(BufferedImage image) {
-        if (image != null) {
-            imageView.setImage(SwingFXUtils.toFXImage(image, null));
-            imageView.setPreserveRatio(true);
-            openRecentMenu.getItems().clear();
-            createRecentMenu();
-        }
+        applyFilter(new Negative());
     }
 
     private void displayImage(String url) {
