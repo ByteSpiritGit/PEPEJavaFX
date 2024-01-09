@@ -1,29 +1,22 @@
 package com.example.pepejavafx;
 
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
+import java.io.IOException;
 
 import static com.example.pepejavafx.ImageUtils.LoadImage;
 import static com.example.pepejavafx.ImageUtils.makeColoredImage;
-
-import java.io.IOException;
-import javafx.stage.Stage;
-import javafx.scene.Node;
-
-import javax.imageio.ImageIO;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 
 public class ImageController {
