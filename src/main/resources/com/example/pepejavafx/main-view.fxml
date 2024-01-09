@@ -27,9 +27,11 @@
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Filter">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#applyNegative" text="Negative" />
-               </items></Menu>
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#applyNegative" text="Negative"/>
+                        <MenuItem mnemonicParsing="false" onAction="#applyGrayscale" text="Grayscale"/>
+                    </items>
+                </Menu>
                 <Menu mnemonicParsing="false" text="About">
                     <items>
                         <MenuItem mnemonicParsing="false" text="About us" />
