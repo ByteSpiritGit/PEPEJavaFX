@@ -3,7 +3,7 @@ package com.example.pepejavafx;
 import java.util.Objects;
 
 public class History {
-    private String[] history;
+    private final String[] history;
 
     public History() {
         history = new String[5];

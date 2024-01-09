@@ -2,6 +2,7 @@ package com.example.pepejavafx;
 
 import com.example.pepejavafx.filters.GrayScale;
 import com.example.pepejavafx.filters.Negative;
+import com.example.pepejavafx.filters.Thresholding;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -19,7 +20,6 @@ import java.io.IOException;
 
 import static com.example.pepejavafx.ImageUtils.LoadImage;
 import static com.example.pepejavafx.ImageUtils.makeColoredImage;
-
 
 public class ImageController {
 
@@ -52,7 +52,7 @@ public class ImageController {
 
             String imagePath = selectedFile.getAbsolutePath();
             myImage = new MyImage(LoadImage(imagePath), null, imagePath);
-
+            history.save(imagePath);
             imagePath = selectedFile.getAbsolutePath();
             displayImage(imagePath);
         }
@@ -94,7 +94,7 @@ public class ImageController {
         try {
             Negative negative = new Negative();
             myImage.modifiedImage = negative.applyFilter(myImage.getOriginalImage());
-            imageView.setImage(SwingFXUtils.toFXImage(myImage.modifiedImage, null));
+            displayImage(myImage.modifiedImage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -105,7 +105,18 @@ public class ImageController {
         try {
             GrayScale grayScale = new GrayScale();
             myImage.modifiedImage = grayScale.applyFilter(myImage.getOriginalImage());
-            imageView.setImage(SwingFXUtils.toFXImage(myImage.modifiedImage, null));
+            displayImage(myImage.modifiedImage);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    private void applyThresholding() {
+        try {
+            Thresholding thresholding = new Thresholding();
+            myImage.modifiedImage = thresholding.applyFilter(myImage.getOriginalImage());
+            displayImage(myImage.modifiedImage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -131,7 +142,7 @@ public class ImageController {
         }
     }
 
-    private void createRecentMenu() {
+        private void createRecentMenu() {
         String[] historyArray = history.getHistory();
         for (int i = 0; i < historyArray.length; i++) {
             if (historyArray[i] != null) {
