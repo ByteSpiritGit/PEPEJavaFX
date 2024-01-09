@@ -1,9 +1,6 @@
 package com.example.pepejavafx;
 
-import com.example.pepejavafx.filters.GrayScale;
-import com.example.pepejavafx.filters.IFilter;
-import com.example.pepejavafx.filters.Negative;
-import com.example.pepejavafx.filters.Thresholding;
+import com.example.pepejavafx.filters.*;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -116,20 +113,30 @@ public class ImageController {
     @FXML
     private void applyNegative() {
         applyFilter(new Negative());
+        displayImage(myImage.modifiedImage);
     }
 
     @FXML
     private void applyGrayscale() {
         applyFilter(new GrayScale());
+        displayImage(myImage.modifiedImage);
     }
 
     @FXML
     private void applyThresholding() {
         applyFilter(new Thresholding());
+        displayImage(myImage.modifiedImage);
     }
 
+    @FXML
+    private void applyConvolution() {
+        applyFilter(new Conv());
+        displayImage(myImage.modifiedImage);
+    }
+
+
     private void displayImage(BufferedImage image) {
-        applyFilter(new Negative());
+        imageView.setImage(SwingFXUtils.toFXImage(image, null));
     }
 
     private void displayImage(String url) {
