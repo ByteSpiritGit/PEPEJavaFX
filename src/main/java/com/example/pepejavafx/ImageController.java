@@ -20,6 +20,8 @@ import static com.example.pepejavafx.ImageUtils.makeColoredImage;
 import java.io.IOException;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+
+import javax.imageio.ImageIO;
 import java.net.URL;
 import java.util.ResourceBundle;
 
