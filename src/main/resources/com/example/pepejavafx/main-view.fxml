@@ -23,18 +23,18 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Preferences…" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Quit" />
+                        <MenuItem mnemonicParsing="false" onAction="#exitMenuClick" text="Quit" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Filter">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#applyNegative" text="Negative"/>
-                        <MenuItem mnemonicParsing="false" onAction="#applyGrayscale" text="Grayscale"/>
+                        <MenuItem mnemonicParsing="false" onAction="#applyNegative" text="Negative" />
+                        <MenuItem mnemonicParsing="false" onAction="#applyGrayscale" text="Grayscale" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="About">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About us" />
+                        <MenuItem mnemonicParsing="false" onAction="#showAboutUs" text="About us" />
                         <MenuItem mnemonicParsing="false" text="About application" />
                     </items>
                 </Menu>
@@ -52,10 +52,6 @@
                         <MenuItem mnemonicParsing="false" text="Unselect All" />
                     </items>
                 </Menu>
-            <Menu mnemonicParsing="false" onAction="#exitMenuClick" text="Exit">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#exitMenuClick" text="Exit App" />
-               </items></Menu>
             </menus>
             <padding>
                 <Insets bottom="2.0" top="2.0" />
@@ -71,19 +67,22 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <SplitPane dividerPositions="0.7" prefHeight="575.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <SplitPane fx:id="mainSplitPane" dividerPositions="0.7" prefHeight="575.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="298.0">
                             <children>
                                 <ImageView fx:id="imageView" fitHeight="560.0" fitWidth="615.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
                             </children>
                         </AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="252.0">
+                        <AnchorPane fx:id="rightMainAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="252.0">
+                            <fx:define>
+                                <ToggleGroup fx:id="previewImageTypeId" />
+                            </fx:define>
                             <children>
                                 <Button layoutX="77.0" layoutY="14.0" mnemonicParsing="false" onAction="#browseImage" prefHeight="30.0" prefWidth="119.0" text="Select image file" AnchorPane.topAnchor="14.0" />
                                 <Button layoutX="98.0" layoutY="57.0" mnemonicParsing="false" text="Edit matrix" AnchorPane.topAnchor="57.0" />
-                                <RadioButton layoutX="78.0" layoutY="494.0" mnemonicParsing="false" text="Original image" AnchorPane.bottomAnchor="62.0" />
-                                <RadioButton layoutX="78.0" layoutY="525.0" mnemonicParsing="false" text="Modified image" AnchorPane.bottomAnchor="31.0" />
+                                <RadioButton layoutX="78.0" layoutY="494.0" mnemonicParsing="false" selected="true" text="Original image" AnchorPane.bottomAnchor="62.0" toggleGroup="$previewImageTypeId" />
+                                <RadioButton layoutX="78.0" layoutY="525.0" mnemonicParsing="false" text="Modified image" toggleGroup="$previewImageTypeId" AnchorPane.bottomAnchor="31.0" />
                                 <Button layoutX="66.0" layoutY="441.0" mnemonicParsing="false" text="Restore original image" AnchorPane.bottomAnchor="101.0" />
                                 <Button layoutX="83.0" layoutY="397.0" mnemonicParsing="false" onAction="#generateImage" text="Generate image" AnchorPane.bottomAnchor="145.0" />
                                 <Button layoutX="84.0" layoutY="193.0" mnemonicParsing="false" text="Apply matrix filter" AnchorPane.topAnchor="193.0" />
