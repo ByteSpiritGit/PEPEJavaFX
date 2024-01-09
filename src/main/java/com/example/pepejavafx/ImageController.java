@@ -6,14 +6,11 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.SplitPane;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -33,6 +30,9 @@ public class ImageController {
 
     @FXML
     private AnchorPane rightMainAnchorPane;
+
+    @FXML private RadioButton modifiedImageRadioButton;
+    @FXML RadioButton originalImageRadioButton;
 
     private final History history = new History();
 
@@ -88,6 +88,8 @@ public class ImageController {
 
     @FXML
     private void displayRecent(ActionEvent event) {
+        originalImageRadioButton.setSelected(true);
+        modifiedImageRadioButton.setDisable(true);
         MenuItem menuItem = (MenuItem) event.getSource();
         String url = menuItem.getText();
         displayImage(url);
@@ -104,6 +106,9 @@ public class ImageController {
     private void applyFilter(IFilter filter) {
         try {
             myImage.modifiedImage = filter.applyFilter(myImage.getOriginalImage());
+            modifiedImageRadioButton.setDisable(false);
+            modifiedImageRadioButton.setSelected(true);
+
             displayImage(myImage.modifiedImage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -167,15 +172,17 @@ public class ImageController {
         vbox.setPrefWidth(300);
         vbox.setPrefHeight(300);
         vbox.setStyle("-fx-background-color: #FFFFFF;");
-        vbox.setSpacing(10);
+        vbox.setSpacing(5);
+        vbox.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
 
         Text title = new Text("O nás");
+
         Text description = new Text("Vytvořeno s láskou pro PEPEho");
 
         Text teamLabel = new Text("Tým: ");
         teamLabel.setStyle("-fx-font-weight: bold;");
 
-        Text teamMembers = new Text("Ondřej Šteffan, Jenda Soukeník, David Vrtílek"); // Replace with your team members
+        Text teamMembers = new Text("Ondřej Šteffan, Jenda Soukeník, David Vrtílek");
         Text version = new Text("Verze: 1.0");
 
         TextFlow textFlow = new TextFlow();
@@ -195,7 +202,8 @@ public class ImageController {
         vbox.setPrefWidth(300);
         vbox.setPrefHeight(300);
         vbox.setStyle("-fx-background-color: #FFFFFF;");
-        vbox.setSpacing(10);
+        vbox.setSpacing(5);
+        vbox.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
 
         Label label = new Label("O aplikaci");
         Label label1 = new Label("Aplikace splňuje všechny požadavky zadání.");
@@ -207,5 +215,19 @@ public class ImageController {
         stage.setTitle("O aplikaci");
         stage.setScene(new Scene(vbox));
         stage.show();
+    }
+
+    @FXML
+    private void showOriginalImage() {
+        if (myImage != null) {
+            imageView.setImage(SwingFXUtils.toFXImage(myImage.getOriginalImage(), null));
+        }
+    }
+
+    @FXML
+    private void showModifiedImage() {
+        if (myImage != null) {
+            imageView.setImage(SwingFXUtils.toFXImage(myImage.modifiedImage, null));
+        }
     }
 }

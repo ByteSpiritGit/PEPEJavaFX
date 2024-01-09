@@ -28,16 +28,16 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Filter">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#applyNegative" text="Negative"/>
-                        <MenuItem mnemonicParsing="false" onAction="#applyGrayscale" text="Grayscale"/>
-                        <MenuItem mnemonicParsing="false" onAction="#applyThresholding" text="Thresholding"/>
-                        <MenuItem mnemonicParsing="false" onAction="#applyConvolution" text="Convolution"/>
+                        <MenuItem mnemonicParsing="false" onAction="#applyNegative" text="Negative" />
+                        <MenuItem mnemonicParsing="false" onAction="#applyGrayscale" text="Grayscale" />
+                        <MenuItem mnemonicParsing="false" onAction="#applyThresholding" text="Thresholding" />
+                        <MenuItem mnemonicParsing="false" onAction="#applyConvolution" text="Convolution" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="About">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#showAboutUs" text="About us" />
-                        <MenuItem mnemonicParsing="false" text="About application" />
+                        <MenuItem mnemonicParsing="false" onAction="#showAboutApplication" text="About application" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
@@ -83,11 +83,37 @@
                             <children>
                                 <Button layoutX="77.0" layoutY="14.0" mnemonicParsing="false" onAction="#browseImage" prefHeight="30.0" prefWidth="119.0" text="Select image file" AnchorPane.topAnchor="14.0" />
                                 <Button layoutX="98.0" layoutY="57.0" mnemonicParsing="false" text="Edit matrix" AnchorPane.topAnchor="57.0" />
-                                <RadioButton layoutX="78.0" layoutY="494.0" mnemonicParsing="false" selected="true" text="Original image" AnchorPane.bottomAnchor="62.0" toggleGroup="$previewImageTypeId" />
-                                <RadioButton layoutX="78.0" layoutY="525.0" mnemonicParsing="false" text="Modified image" toggleGroup="$previewImageTypeId" AnchorPane.bottomAnchor="31.0" />
+                                <RadioButton fx:id="originalImageRadioButton" layoutX="78.0" layoutY="494.0" mnemonicParsing="false" onAction="#showOriginalImage" selected="true" text="Original image" AnchorPane.bottomAnchor="62.0">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="previewImageTypeId" />
+                           </toggleGroup></RadioButton>
+                                <RadioButton fx:id="modifiedImageRadioButton" disable="true" layoutX="78.0" layoutY="525.0" mnemonicParsing="false" onAction="#showModifiedImage" text="Modified image" toggleGroup="$previewImageTypeId" AnchorPane.bottomAnchor="31.0" />
                                 <Button layoutX="66.0" layoutY="441.0" mnemonicParsing="false" text="Restore original image" AnchorPane.bottomAnchor="101.0" />
                                 <Button layoutX="83.0" layoutY="397.0" mnemonicParsing="false" onAction="#generateImage" text="Generate image" AnchorPane.bottomAnchor="145.0" />
                                 <Button layoutX="84.0" layoutY="193.0" mnemonicParsing="false" text="Apply matrix filter" AnchorPane.topAnchor="193.0" />
+                        <GridPane layoutX="51.0" layoutY="94.0" prefHeight="90.0" prefWidth="171.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.0" minWidth="10.0" prefWidth="72.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="68.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="10.0" prefWidth="67.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <TextField />
+                              <TextField GridPane.columnIndex="1" />
+                              <TextField GridPane.columnIndex="2" />
+                              <TextField GridPane.rowIndex="1" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <TextField GridPane.rowIndex="2" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
                             </children>
                         </AnchorPane>
                     </items>
