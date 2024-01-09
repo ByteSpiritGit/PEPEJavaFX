@@ -30,6 +30,7 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#applyNegative" text="Negative"/>
                         <MenuItem mnemonicParsing="false" onAction="#applyGrayscale" text="Grayscale"/>
+                        <MenuItem mnemonicParsing="false" onAction="#applyThresholding" text="Thresholding"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="About">
