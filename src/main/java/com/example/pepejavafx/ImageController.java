@@ -80,15 +80,32 @@ public class ImageController {
     }
 
     @FXML
-    private void saveImage(ActionEvent event) {
+    private void saveAs(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.bmp", "*.jpeg")
         );
         File selectedFile = fileChooser.showSaveDialog(null);
-        if (selectedFile != null) {
+        saveImage(selectedFile);
+    }
+
+    @FXML
+    private void save(ActionEvent event) {
+        if (myImage != null) {
+            if (myImage.imagePath != null) {
+                saveImage(new File(myImage.imagePath));
+                return;
+            }
+            saveAs(event);
+        }
+    }
+
+
+
+    private void saveImage(File file) {
+        if (file != null) {
             try {
-                ImageIO.write(SwingFXUtils.fromFXImage(imageView.getImage(), null), "png", selectedFile);
+                ImageIO.write(SwingFXUtils.fromFXImage(imageView.getImage(), null), "png", file);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
