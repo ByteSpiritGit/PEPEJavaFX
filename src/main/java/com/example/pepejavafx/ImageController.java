@@ -105,6 +105,8 @@ public class ImageController {
     private void saveImage(File file) {
         if (file != null) {
             try {
+                myImage.imagePath = file.getAbsolutePath();
+                history.save(myImage.imagePath);
                 ImageIO.write(SwingFXUtils.fromFXImage(imageView.getImage(), null), "png", file);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
