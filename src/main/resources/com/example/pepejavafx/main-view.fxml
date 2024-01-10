@@ -32,6 +32,9 @@
                         <MenuItem mnemonicParsing="false" onAction="#applyGrayscale" text="Grayscale" />
                         <MenuItem mnemonicParsing="false" onAction="#applyThresholding" text="Thresholding" />
                         <MenuItem mnemonicParsing="false" onAction="#applyConvolution" text="Convolution" />
+                        <MenuItem mnemonicParsing="false" onAction="#applyEdgeDetection" text="Edge Detection" />
+                        <MenuItem mnemonicParsing="false" onAction="#applyEmboss" text="Emboss" />
+                        <MenuItem mnemonicParsing="false" onAction="#applySharpen" text="Sharpen" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="About">

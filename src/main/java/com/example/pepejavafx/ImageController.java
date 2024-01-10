@@ -174,6 +174,34 @@ public class ImageController {
         applyFilter(new MyConv());
     }
 
+    @FXML
+    private void applyEdgeDetection() {
+        applyFilter(new MyConv(new float[][]{
+                {-1f, -1f, -1f},
+                {-1f, 8f, -1f},
+                {-1f, -1f, -1f}
+        }));
+    }
+
+    @FXML
+    private void applyEmboss() {
+        applyFilter(new MyConv(new float[][]{
+                {-2f, -1f, 0f},
+                {-1f, 1f, 1f},
+                {0f, 1f, 2f}
+        }));
+    }
+
+    @FXML
+    private void applySharpen() {
+        applyFilter(new MyConv(new float[][]{
+                {0f, -1f, 0f},
+                {-1f, 5f, -1f},
+                {0f, -1f, 0f}
+        }));
+    }
+
+
 
     private void displayImage(BufferedImage image) {
         if (image != null) {
