@@ -68,7 +68,6 @@ public class ImageController {
         );
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
-
             String imagePath = selectedFile.getAbsolutePath();
             myImage = new MyImage(LoadImage(imagePath), null, imagePath);
             originalImageRadioButton.setSelected(true);
@@ -80,15 +79,34 @@ public class ImageController {
     }
 
     @FXML
-    private void saveImage(ActionEvent event) {
+    private void saveAs(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.bmp", "*.jpeg")
         );
         File selectedFile = fileChooser.showSaveDialog(null);
-        if (selectedFile != null) {
+        saveImage(selectedFile);
+    }
+
+    @FXML
+    private void save(ActionEvent event) {
+        if (myImage != null) {
+            if (myImage.imagePath != null) {
+                saveImage(new File(myImage.imagePath));
+                return;
+            }
+            saveAs(event);
+        }
+    }
+
+
+
+    private void saveImage(File file) {
+        if (file != null) {
             try {
-                ImageIO.write(SwingFXUtils.fromFXImage(imageView.getImage(), null), "png", selectedFile);
+                myImage.imagePath = file.getAbsolutePath();
+                history.save(myImage.imagePath);
+                ImageIO.write(SwingFXUtils.fromFXImage(imageView.getImage(), null), "png", file);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -110,20 +128,21 @@ public class ImageController {
     private void generateImage() {
         BufferedImage image = makeColoredImage();
         imageView.setImage(SwingFXUtils.toFXImage(image, null));
-
+        originalImageRadioButton.setSelected(true);
+        modifiedImageRadioButton.setDisable(true);
         myImage = new MyImage(image, null, null);
     }
 
     private void applyFilter(IFilter filter) {
         try {
-            if (myImage == null) {
+            if (this.myImage == null) {
                     System.out.println("No image selected");
                     browseImage(null);
+                if (this.myImage == null) {return;}
             }
             myImage.modifiedImage = filter.applyFilter(myImage.getOriginalImage());
             modifiedImageRadioButton.setDisable(false);
             modifiedImageRadioButton.setSelected(true);
-
             displayImage(myImage.modifiedImage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -133,32 +152,55 @@ public class ImageController {
     @FXML
     private void applyNegative() {
         applyFilter(new Negative());
-        displayImage(myImage.modifiedImage);
     }
 
     @FXML
     private void applyGrayscale() {
         applyFilter(new GrayScale());
-        displayImage(myImage.modifiedImage);
     }
 
     @FXML
     private void applyThresholding() {
         applyFilter(new Thresholding());
-        displayImage(myImage.modifiedImage);
     }
 
     @FXML
     private void applyConvolution() {
-        System.out.println(getConvMatrix().length);
         if (getConvMatrix().length > 0) {
             applyFilter(new MyConv(getConvMatrix()));
             displayImage(myImage.modifiedImage);
             return;
         }
         applyFilter(new MyConv());
-        displayImage(myImage.modifiedImage);
     }
+
+    @FXML
+    private void applyEdgeDetection() {
+        applyFilter(new MyConv(new float[][]{
+                {-1f, -1f, -1f},
+                {-1f, 8f, -1f},
+                {-1f, -1f, -1f}
+        }));
+    }
+
+    @FXML
+    private void applyEmboss() {
+        applyFilter(new MyConv(new float[][]{
+                {-2f, -1f, 0f},
+                {-1f, 1f, 1f},
+                {0f, 1f, 2f}
+        }));
+    }
+
+    @FXML
+    private void applySharpen() {
+        applyFilter(new MyConv(new float[][]{
+                {0f, -1f, 0f},
+                {-1f, 5f, -1f},
+                {0f, -1f, 0f}
+        }));
+    }
+
 
 
     private void displayImage(BufferedImage image) {
