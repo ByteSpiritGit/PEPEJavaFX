@@ -105,6 +105,9 @@ public class ImageController {
 
     private void applyFilter(IFilter filter) {
         try {
+            if (myImage == null) {
+                browseImage(null);
+            }
             myImage.modifiedImage = filter.applyFilter(myImage.getOriginalImage());
             modifiedImageRadioButton.setDisable(false);
             modifiedImageRadioButton.setSelected(true);
