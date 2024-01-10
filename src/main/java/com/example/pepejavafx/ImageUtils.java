@@ -1,7 +1,7 @@
 package com.example.pepejavafx;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.Color;
 
 public class ImageUtils {
 
@@ -19,7 +19,7 @@ public class ImageUtils {
         BufferedImage bImage = new BufferedImage(600, 600, BufferedImage.TYPE_3BYTE_BGR);
         for (int x = 0; x < bImage.getWidth(); x++) {
             for (int y = 0; y < bImage.getHeight(); y++) {
-                bImage.setRGB(x, y, (new Color((x + 10) % 255, (x * 20) % 255, (x * y) % 255).getRGB()));
+                bImage.setRGB(x, y, (new Color((x + 69) % 255, (x * 5) % 255, (x * y) % 255).getRGB()));
             }
         }
         return bImage;
