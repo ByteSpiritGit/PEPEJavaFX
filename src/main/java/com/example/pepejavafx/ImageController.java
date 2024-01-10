@@ -95,6 +95,8 @@ public class ImageController {
         }
     }
 
+
+
     @FXML
     private void displayRecent(ActionEvent event) {
         originalImageRadioButton.setSelected(true);
@@ -115,7 +117,8 @@ public class ImageController {
     private void applyFilter(IFilter filter) {
         try {
             if (myImage == null) {
-                browseImage(null);
+                    System.out.println("No image selected");
+                    browseImage(null);
             }
             myImage.modifiedImage = filter.applyFilter(myImage.getOriginalImage());
             modifiedImageRadioButton.setDisable(false);
@@ -147,7 +150,13 @@ public class ImageController {
 
     @FXML
     private void applyConvolution() {
-        applyFilter(new MyConv(getConvMatrix()));
+        System.out.println(getConvMatrix().length);
+        if (getConvMatrix().length > 0) {
+            applyFilter(new MyConv(getConvMatrix()));
+            displayImage(myImage.modifiedImage);
+            return;
+        }
+        applyFilter(new MyConv());
         displayImage(myImage.modifiedImage);
     }
 
@@ -249,6 +258,9 @@ public class ImageController {
         float[][] matrix = new float[3][3];
         for (int i = 0; i < ConvMatrix.getChildren().size(); i++) {
             TextField textField = (TextField) ConvMatrix.getChildren().get(i);
+            if (textField.getText().isEmpty()) {
+                return new float[0][0];
+            }
             matrix[i / 3][i % 3] = Float.parseFloat(textField.getText());
         }
         return matrix;
