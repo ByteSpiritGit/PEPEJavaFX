@@ -71,6 +71,8 @@ public class ImageController {
 
             String imagePath = selectedFile.getAbsolutePath();
             myImage = new MyImage(LoadImage(imagePath), null, imagePath);
+            originalImageRadioButton.setSelected(true);
+            modifiedImageRadioButton.setDisable(true);
             history.save(imagePath);
             imagePath = selectedFile.getAbsolutePath();
             displayImage(imagePath);
