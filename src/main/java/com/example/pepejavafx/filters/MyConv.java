@@ -13,9 +13,9 @@ public class MyConv implements IFilter{
 
     public MyConv() {
         this.filterMatrix = new float[][]{
-                {-1f, -1f, -1f},
-                {-1f, 8f, -1f},
-                {-1f, -1f, -1f}
+                {-1f, -2f, -1f},
+                {0f, 0f, 0f},
+                {1f, 2f, 1f}
         };
     }
 
