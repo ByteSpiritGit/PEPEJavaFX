@@ -68,7 +68,6 @@ public class ImageController {
         );
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
-
             String imagePath = selectedFile.getAbsolutePath();
             myImage = new MyImage(LoadImage(imagePath), null, imagePath);
             originalImageRadioButton.setSelected(true);
@@ -129,20 +128,21 @@ public class ImageController {
     private void generateImage() {
         BufferedImage image = makeColoredImage();
         imageView.setImage(SwingFXUtils.toFXImage(image, null));
-
+        originalImageRadioButton.setSelected(true);
+        modifiedImageRadioButton.setDisable(true);
         myImage = new MyImage(image, null, null);
     }
 
     private void applyFilter(IFilter filter) {
         try {
-            if (myImage == null) {
+            if (this.myImage == null) {
                     System.out.println("No image selected");
                     browseImage(null);
+                if (this.myImage == null) {return;}
             }
             myImage.modifiedImage = filter.applyFilter(myImage.getOriginalImage());
             modifiedImageRadioButton.setDisable(false);
             modifiedImageRadioButton.setSelected(true);
-
             displayImage(myImage.modifiedImage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -152,31 +152,26 @@ public class ImageController {
     @FXML
     private void applyNegative() {
         applyFilter(new Negative());
-        displayImage(myImage.modifiedImage);
     }
 
     @FXML
     private void applyGrayscale() {
         applyFilter(new GrayScale());
-        displayImage(myImage.modifiedImage);
     }
 
     @FXML
     private void applyThresholding() {
         applyFilter(new Thresholding());
-        displayImage(myImage.modifiedImage);
     }
 
     @FXML
     private void applyConvolution() {
-        System.out.println(getConvMatrix().length);
         if (getConvMatrix().length > 0) {
             applyFilter(new MyConv(getConvMatrix()));
             displayImage(myImage.modifiedImage);
             return;
         }
         applyFilter(new MyConv());
-        displayImage(myImage.modifiedImage);
     }
 
 

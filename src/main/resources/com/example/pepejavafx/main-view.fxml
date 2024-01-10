@@ -16,7 +16,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#browseImage" text="Open…" />
                         <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Open Recent" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" onAction="#exitMenuClick" text="Close" />
                         <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
                         <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As…" />
                         <MenuItem mnemonicParsing="false" text="Revert" />
