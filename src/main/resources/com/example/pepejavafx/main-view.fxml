@@ -16,9 +16,9 @@
                         <MenuItem mnemonicParsing="false" onAction="#browseImage" text="Open…" />
                         <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Open Recent" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                        <MenuItem mnemonicParsing="false" text="Save" />
-                        <MenuItem mnemonicParsing="false" onAction="#saveImage" text="Save As…" />
+                        <MenuItem mnemonicParsing="false" onAction="#exitMenuClick" text="Close" />
+                        <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As…" />
                         <MenuItem mnemonicParsing="false" text="Revert" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Preferences…" />
@@ -32,6 +32,9 @@
                         <MenuItem mnemonicParsing="false" onAction="#applyGrayscale" text="Grayscale" />
                         <MenuItem mnemonicParsing="false" onAction="#applyThresholding" text="Thresholding" />
                         <MenuItem mnemonicParsing="false" onAction="#applyConvolution" text="Convolution" />
+                        <MenuItem mnemonicParsing="false" onAction="#applyEdgeDetection" text="Edge Detection" />
+                        <MenuItem mnemonicParsing="false" onAction="#applyEmboss" text="Emboss" />
+                        <MenuItem mnemonicParsing="false" onAction="#applySharpen" text="Sharpen" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="About">
