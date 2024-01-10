@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.scene.layout.AnchorPane;
@@ -31,8 +32,14 @@ public class ImageController {
     @FXML
     private AnchorPane rightMainAnchorPane;
 
-    @FXML private RadioButton modifiedImageRadioButton;
-    @FXML RadioButton originalImageRadioButton;
+    @FXML
+    private RadioButton modifiedImageRadioButton;
+
+    @FXML
+    RadioButton originalImageRadioButton;
+
+    @FXML
+    GridPane ConvMatrix;
 
     private final History history = new History();
 
@@ -138,13 +145,15 @@ public class ImageController {
 
     @FXML
     private void applyConvolution() {
-        applyFilter(new Conv());
+        applyFilter(new MyConv(getConvMatrix()));
         displayImage(myImage.modifiedImage);
     }
 
 
     private void displayImage(BufferedImage image) {
-        imageView.setImage(SwingFXUtils.toFXImage(image, null));
+        if (image != null) {
+            imageView.setImage(SwingFXUtils.toFXImage(image, null));
+        }
     }
 
     private void displayImage(String url) {
@@ -160,13 +169,13 @@ public class ImageController {
 
         private void createRecentMenu() {
         String[] historyArray = history.getHistory();
-        for (int i = 0; i < historyArray.length; i++) {
-            if (historyArray[i] != null) {
-                MenuItem menuItem = new MenuItem(historyArray[i]);
-                menuItem.setOnAction(this::displayRecent);
-                openRecentMenu.getItems().add(menuItem);
+            for (String s : historyArray) {
+                if (s != null) {
+                    MenuItem menuItem = new MenuItem(s);
+                    menuItem.setOnAction(this::displayRecent);
+                    openRecentMenu.getItems().add(menuItem);
+                }
             }
-        }
     }
 
     @FXML
@@ -232,5 +241,14 @@ public class ImageController {
         if (myImage != null) {
             imageView.setImage(SwingFXUtils.toFXImage(myImage.modifiedImage, null));
         }
+    }
+
+    private float[][] getConvMatrix() {
+        float[][] matrix = new float[3][3];
+        for (int i = 0; i < ConvMatrix.getChildren().size(); i++) {
+            TextField textField = (TextField) ConvMatrix.getChildren().get(i);
+            matrix[i / 3][i % 3] = Float.parseFloat(textField.getText());
+        }
+        return matrix;
     }
 }

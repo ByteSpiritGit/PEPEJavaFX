@@ -3,19 +3,19 @@ package com.example.pepejavafx.filters;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Conv implements IFilter{
+public class MyConv implements IFilter{
 
-    private int[][] filterMatrix;
+    private float[][] filterMatrix;
 
-    public Conv(int[][] filterMatrix) {
+    public MyConv(float[][] filterMatrix) {
         this.filterMatrix = filterMatrix;
     }
 
-    public Conv() {
-        this.filterMatrix = new int[][]{
-                {1, 2, 1},
-                {2, 5, 2},
-                {1, 2, 1}
+    public MyConv() {
+        this.filterMatrix = new float[][]{
+                {-1f, -1f, -1f},
+                {-1f, 8f, -1f},
+                {-1f, -1f, -1f}
         };
     }
 
@@ -25,7 +25,7 @@ public class Conv implements IFilter{
     }
 
     // Function to apply convolution on a BufferedImage
-    public BufferedImage ApplyConvolution(BufferedImage image, int[][] filterMatrix) {
+    public BufferedImage ApplyConvolution(BufferedImage image, float[][] filterMatrix) {
         // Get height and width of
         int rows = image.getHeight();
         int cols = image.getWidth();
@@ -44,15 +44,22 @@ public class Conv implements IFilter{
         return newImage;
     }
 
-    public int getPixelValue(int[][] filterMatrix, BufferedImage image, int i, int j) {
-        int sum = 0;
+    public int getPixelValue(float[][] filterMatrix, BufferedImage image, int i, int j) {
+        int redSum = 0;
+        int greenSum = 0;
+        int blueSum = 0;
         for (int k = -1; k <= 1; k++) {
             Color pixel;
             for (int l = -1; l <= 1; l++){
                 pixel = new Color(image.getRGB(j + l, i + k));
-                sum += pixel.getRed() * filterMatrix[k + 1][l + 1];
+                redSum += (int) (pixel.getRed() * filterMatrix[k + 1][l + 1]);
+                greenSum += (int) (pixel.getGreen() * filterMatrix[k + 1][l + 1]);
+                blueSum += (int) (pixel.getBlue() * filterMatrix[k + 1][l + 1]);
             }
         }
+        int red = Math.min(255, Math.max(0, redSum));
+        int green = Math.min(255, Math.max(0, greenSum));
+        int blue = Math.min(255, Math.max(0, blueSum));
 
-        return sum;
+        return new Color(red, green, blue).getRGB();
     }}
