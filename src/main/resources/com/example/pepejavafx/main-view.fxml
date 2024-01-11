@@ -86,10 +86,7 @@
                             <children>
                                 <Button layoutX="77.0" layoutY="14.0" mnemonicParsing="false" onAction="#browseImage" prefHeight="30.0" prefWidth="119.0" text="Select image file" AnchorPane.topAnchor="14.0" />
                                 <Button layoutX="98.0" layoutY="57.0" mnemonicParsing="false" text="Edit matrix" AnchorPane.topAnchor="57.0" />
-                                <RadioButton fx:id="originalImageRadioButton" layoutX="78.0" layoutY="494.0" mnemonicParsing="false" onAction="#showOriginalImage" selected="true" text="Original image" AnchorPane.bottomAnchor="62.0">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="previewImageTypeId" />
-                           </toggleGroup></RadioButton>
+                                <RadioButton fx:id="originalImageRadioButton" layoutX="78.0" layoutY="494.0" mnemonicParsing="false" onAction="#showOriginalImage" selected="true" text="Original image" AnchorPane.bottomAnchor="62.0" />
                                 <RadioButton fx:id="modifiedImageRadioButton" disable="true" layoutX="78.0" layoutY="525.0" mnemonicParsing="false" onAction="#showModifiedImage" text="Modified image" toggleGroup="$previewImageTypeId" AnchorPane.bottomAnchor="31.0" />
                                 <Button layoutX="66.0" layoutY="441.0" mnemonicParsing="false" onAction="#restoreOriginalImage" text="Restore original image" AnchorPane.bottomAnchor="101.0" />
                                 <Button layoutX="83.0" layoutY="397.0" mnemonicParsing="false" onAction="#generateImage" text="Generate image" AnchorPane.bottomAnchor="145.0" />
