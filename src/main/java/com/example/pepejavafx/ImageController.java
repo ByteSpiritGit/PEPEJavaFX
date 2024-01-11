@@ -7,13 +7,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.TextFlow;
-import javafx.stage.FileChooser;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -43,7 +44,11 @@ public class ImageController {
 
     private final History history = new History();
 
-    private MyImage myImage;
+    private final ImageHistory imageHistory = new ImageHistory();
+
+    private MyImage OriginalImage;
+
+    private MyImage ModifiedImage;
 
     @FXML
     private ImageView imageView;
@@ -55,10 +60,33 @@ public class ImageController {
     private void initialize() {
         mainSplitPane.setDividerPositions(0.7);
         rightMainAnchorPane.setMinWidth(275);
+        modifiedImageRadioButton.setDisable(true);
     }
 
     @FXML
-    public void exitMenuClick(ActionEvent event) { Platform.exit(); }
+    public void undo(ActionEvent event) {
+        MyImage imageBefore = imageHistory.undo();
+        if (imageBefore == null) {
+            imageBefore = OriginalImage.clone();
+        }
+        ModifiedImage = imageBefore.clone();
+
+        UpdateRadioButtons();
+    }
+
+    @FXML
+    public void redo(ActionEvent event) {
+        MyImage imageAfter = imageHistory.redo();
+        if (imageAfter != null) {
+            ModifiedImage = imageAfter.clone();
+            UpdateRadioButtons();
+        }
+    }
+
+    @FXML
+    public void exitMenuClick(ActionEvent event) {
+        Platform.exit();
+    }
 
     @FXML
     private void browseImage(ActionEvent event) {
@@ -69,12 +97,13 @@ public class ImageController {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             String imagePath = selectedFile.getAbsolutePath();
-            myImage = new MyImage(LoadImage(imagePath), null, imagePath);
+            OriginalImage = new MyImage(LoadImage(imagePath), imagePath);
+            ModifiedImage = new MyImage(LoadImage(imagePath), imagePath);
             originalImageRadioButton.setSelected(true);
-            modifiedImageRadioButton.setDisable(true);
+
+            modifiedImageRadioButton.setDisable(false);
             history.save(imagePath);
-            imagePath = selectedFile.getAbsolutePath();
-            displayImage(imagePath);
+            UpdateRadioButtons();
         }
     }
 
@@ -85,27 +114,26 @@ public class ImageController {
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.bmp", "*.jpeg")
         );
         File selectedFile = fileChooser.showSaveDialog(null);
+        ModifiedImage.imagePath = selectedFile.getAbsolutePath();
         saveImage(selectedFile);
     }
 
     @FXML
     private void save(ActionEvent event) {
-        if (myImage != null) {
-            if (myImage.imagePath != null) {
-                saveImage(new File(myImage.imagePath));
+        if (OriginalImage != null) {
+            if (OriginalImage.imagePath != null) {
+                saveImage(new File(OriginalImage.imagePath));
                 return;
             }
             saveAs(event);
         }
     }
 
-
-
     private void saveImage(File file) {
         if (file != null) {
             try {
-                myImage.imagePath = file.getAbsolutePath();
-                history.save(myImage.imagePath);
+                OriginalImage.imagePath = file.getAbsolutePath();
+                history.save(OriginalImage.imagePath);
                 ImageIO.write(SwingFXUtils.fromFXImage(imageView.getImage(), null), "png", file);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -113,37 +141,51 @@ public class ImageController {
         }
     }
 
-
-
     @FXML
     private void displayRecent(ActionEvent event) {
         originalImageRadioButton.setSelected(true);
-        modifiedImageRadioButton.setDisable(true);
         MenuItem menuItem = (MenuItem) event.getSource();
         String url = menuItem.getText();
         displayImage(url);
+        UpdateRadioButtons();
+    }
+
+    @FXML
+    private void restoreOriginalImage() {
+        ModifiedImage = OriginalImage.clone();
+        // Clear history
+        imageHistory.clear();
+
+        UpdateRadioButtons();
     }
 
     @FXML
     private void generateImage() {
         BufferedImage image = makeColoredImage();
-        imageView.setImage(SwingFXUtils.toFXImage(image, null));
+        displayImage(image);
         originalImageRadioButton.setSelected(true);
-        modifiedImageRadioButton.setDisable(true);
-        myImage = new MyImage(image, null, null);
+        UpdateRadioButtons();
+        OriginalImage = new MyImage(image, null);
+        ModifiedImage = new MyImage(image, null);
     }
 
     private void applyFilter(IFilter filter) {
         try {
-            if (this.myImage == null) {
-                    System.out.println("No image selected");
-                    browseImage(null);
-                if (this.myImage == null) {return;}
+            if (this.OriginalImage == null) {
+                System.out.println("No image selected");
+                browseImage(null);
+                if (this.OriginalImage == null) {
+                    return;
+                }
             }
-            myImage.modifiedImage = filter.applyFilter(myImage.getOriginalImage());
+
+            // Apply filter
+            ModifiedImage.setImage(filter.applyFilter(ModifiedImage.getImage()));
+            imageHistory.saveImage(ModifiedImage.clone());
             modifiedImageRadioButton.setDisable(false);
             modifiedImageRadioButton.setSelected(true);
-            displayImage(myImage.modifiedImage);
+
+            UpdateRadioButtons();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -168,7 +210,6 @@ public class ImageController {
     private void applyConvolution() {
         if (getConvMatrix().length > 0) {
             applyFilter(new MyConv(getConvMatrix()));
-            displayImage(myImage.modifiedImage);
             return;
         }
         applyFilter(new MyConv());
@@ -202,33 +243,33 @@ public class ImageController {
     }
 
 
-
     private void displayImage(BufferedImage image) {
         if (image != null) {
             imageView.setImage(SwingFXUtils.toFXImage(image, null));
+            imageView.setPreserveRatio(true);
         }
     }
 
     private void displayImage(String url) {
         if (url != null) {
             BufferedImage image = LoadImage(url);
-            myImage = new MyImage(image, null, url);
-            imageView.setImage(SwingFXUtils.toFXImage(myImage.getOriginalImage(), null));
+            OriginalImage = new MyImage(image, url);
+            imageView.setImage(SwingFXUtils.toFXImage(OriginalImage.getImage(), null));
             imageView.setPreserveRatio(true);
             openRecentMenu.getItems().clear();
             createRecentMenu();
         }
     }
 
-        private void createRecentMenu() {
+    private void createRecentMenu() {
         String[] historyArray = history.getHistory();
-            for (String s : historyArray) {
-                if (s != null) {
-                    MenuItem menuItem = new MenuItem(s);
-                    menuItem.setOnAction(this::displayRecent);
-                    openRecentMenu.getItems().add(menuItem);
-                }
+        for (String s : historyArray) {
+            if (s != null) {
+                MenuItem menuItem = new MenuItem(s);
+                menuItem.setOnAction(this::displayRecent);
+                openRecentMenu.getItems().add(menuItem);
             }
+        }
     }
 
     @FXML
@@ -284,16 +325,12 @@ public class ImageController {
 
     @FXML
     private void showOriginalImage() {
-        if (myImage != null) {
-            imageView.setImage(SwingFXUtils.toFXImage(myImage.getOriginalImage(), null));
-        }
+        displayImage(OriginalImage.getImage());
     }
 
     @FXML
     private void showModifiedImage() {
-        if (myImage != null) {
-            imageView.setImage(SwingFXUtils.toFXImage(myImage.modifiedImage, null));
-        }
+        displayImage(ModifiedImage.getImage());
     }
 
     private float[][] getConvMatrix() {
@@ -306,5 +343,15 @@ public class ImageController {
             matrix[i / 3][i % 3] = Float.parseFloat(textField.getText());
         }
         return matrix;
+    }
+
+    private void UpdateRadioButtons() {
+        if (imageHistory.canUndo()) {
+            modifiedImageRadioButton.setSelected(true);
+            showModifiedImage();
+        } else {
+            originalImageRadioButton.setSelected(true);
+            showOriginalImage();
+        }
     }
 }

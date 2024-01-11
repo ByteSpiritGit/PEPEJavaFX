@@ -45,8 +45,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Undo" />
-                        <MenuItem mnemonicParsing="false" text="Redo" />
+                        <MenuItem mnemonicParsing="false" onAction="#undo" text="Undo" />
+                        <MenuItem mnemonicParsing="false" onAction="#redo" text="Redo" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Cut" />
                         <MenuItem mnemonicParsing="false" text="Copy" />
@@ -91,7 +91,7 @@
                               <ToggleGroup fx:id="previewImageTypeId" />
                            </toggleGroup></RadioButton>
                                 <RadioButton fx:id="modifiedImageRadioButton" disable="true" layoutX="78.0" layoutY="525.0" mnemonicParsing="false" onAction="#showModifiedImage" text="Modified image" toggleGroup="$previewImageTypeId" AnchorPane.bottomAnchor="31.0" />
-                                <Button layoutX="66.0" layoutY="441.0" mnemonicParsing="false" text="Restore original image" AnchorPane.bottomAnchor="101.0" />
+                                <Button layoutX="66.0" layoutY="441.0" mnemonicParsing="false" onAction="#restoreOriginalImage" text="Restore original image" AnchorPane.bottomAnchor="101.0" />
                                 <Button layoutX="83.0" layoutY="397.0" mnemonicParsing="false" onAction="#generateImage" text="Generate image" AnchorPane.bottomAnchor="145.0" />
                                 <Button layoutX="84.0" layoutY="193.0" mnemonicParsing="false" text="Apply matrix filter" AnchorPane.topAnchor="193.0" onAction="#applyConvolution"/>
                         <GridPane fx:id="ConvMatrix" layoutX="51.0" layoutY="94.0" prefHeight="90.0" prefWidth="171.0">
