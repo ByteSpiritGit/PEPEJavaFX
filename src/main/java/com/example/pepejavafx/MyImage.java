@@ -4,24 +4,30 @@ import java.awt.image.BufferedImage;
 
 public class MyImage {
 
-    private final BufferedImage originalImage;
-    public BufferedImage modifiedImage;
+    private BufferedImage image;
+//    public BufferedImage modifiedImage;
 
     public String imagePath;
 
     public MyImage() {
-        originalImage = null;
-        modifiedImage = null;
+        image = null;
         imagePath = "";
     }
 
-    public MyImage(BufferedImage originalImage, BufferedImage modifiedImage, String imagePath) {
-        this.originalImage = originalImage;
-        this.modifiedImage = modifiedImage;
+    public MyImage(BufferedImage originalImage, String imagePath) {
+        this.image = originalImage;
         this.imagePath = imagePath;
     }
 
-    public BufferedImage getOriginalImage() {
-        return originalImage;
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
+    public MyImage clone() {
+        return new MyImage(image, imagePath);
     }
 }
