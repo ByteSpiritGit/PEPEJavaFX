@@ -111,7 +111,9 @@ public class ImageController {
     private void saveAs(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.bmp", "*.jpeg")
+                new FileChooser.ExtensionFilter("png", "*.png"),
+                new FileChooser.ExtensionFilter("jpg", "*.jpg"),
+                new FileChooser.ExtensionFilter("jpeg", "*.jpeg")
         );
         File selectedFile = fileChooser.showSaveDialog(null);
         ModifiedImage.imagePath = selectedFile.getAbsolutePath();
@@ -162,11 +164,11 @@ public class ImageController {
     @FXML
     private void generateImage() {
         BufferedImage image = makeColoredImage();
-        displayImage(image);
-        originalImageRadioButton.setSelected(true);
-        UpdateRadioButtons();
         OriginalImage = new MyImage(image, null);
         ModifiedImage = new MyImage(image, null);
+        displayImage(image);
+        UpdateRadioButtons();
+        originalImageRadioButton.setSelected(true);
     }
 
     private void applyFilter(IFilter filter) {
