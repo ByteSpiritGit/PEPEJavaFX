@@ -172,7 +172,7 @@ public class ImageController {
     private void applyFilter(IFilter filter) {
         try {
             if (this.OriginalImage == null) {
-                System.out.println("No image selected");
+//                System.out.println("No image selected");
                 browseImage(null);
                 if (this.OriginalImage == null) {
                     return;

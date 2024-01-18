@@ -41,11 +41,6 @@ public class History {
             history[i] = history[i - 1];
         }
         history[0] = url;
-
-        System.out.println("History:");
-        for (String s : history) {
-            System.out.println(s);
-        }
     }
 
     public String[] getHistory() {

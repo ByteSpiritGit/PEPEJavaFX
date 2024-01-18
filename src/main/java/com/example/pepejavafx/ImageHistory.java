@@ -15,8 +15,8 @@ public class ImageHistory {
         undoStack.push(image);
         redoStack.clear(); // Clear redo stack when a new image is saved
         // print len of undo stack
-        System.out.println("Undo stack length: " + undoStack.size());
-        System.out.println("Redo stack length: " + redoStack.size());
+//        System.out.println("Undo stack length: " + undoStack.size());
+//        System.out.println("Redo stack length: " + redoStack.size());
     }
 
     public MyImage undo() {
