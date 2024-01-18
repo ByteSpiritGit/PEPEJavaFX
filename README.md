@@ -1,6 +1,13 @@
 # PEPEJavaFX
 School work for Pepe with Java GUI
 
+
+## Jak spustit
+<!-- OPENJDK 21.0.1 -->
+1. Download and install [OpenJDK 21.0.1](https://jdk.java.net/21/) 
+2. Run `java -jar PEPEJavaFX.jar`
+
+
 ## Zadání týmové práce
 
 ### Zadání
